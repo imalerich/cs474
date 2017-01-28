@@ -123,7 +123,7 @@ void knn(const int n, const int d, const float * Y,
 	cudaMemcpy(cu_Y, Y, d * sizeof(float), cudaMemcpyHostToDevice);
 	cudaMemcpy(cu_L, L, n * sizeof(int), cudaMemcpyHostToDevice);
 
-	// Compute distances in parallel in 1 block of 256 threads.
+	// Compute distances in parallel in blocks of 256 threads.
 	calcDistE<<<(n + 255)/256, 256>>>(n, d, cu_Y, cu_X, cu_DIST);
 	findNearest<<<(n + 255)/256, 256>>>(n, cu_DIST, cu_L, cu_OUT);
 
