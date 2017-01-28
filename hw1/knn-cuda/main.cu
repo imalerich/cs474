@@ -4,35 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Provided data set.
-
 #define RED		0
 #define GREEN	1
 
 const char * LABELS[] = {
 	"Red",
 	"Green"
-};
-
-const int d = 3; // 3-dimmensional data set
-const int n = 6; // with 6 elements.
-
-const float Y[] = {0, 0, 0};
-const float X[] = {
-	2, 3, 0,	// 1
-	2, 0, 1,	// 2
-	0, 1, 3,	// 3
-	0, 1, 2,	// 4
-	-1, 0, 1,	// 5
-	1, -1, 1	// 6
-};
-const int L[] = {
-	RED,		// 1
-	RED,		// 2
-	RED,		// 3
-	GREEN,		// 4
-	GREEN,		// 5
-	RED			// 6
 };
 
 /**
@@ -156,6 +133,27 @@ void knn(const int n, const int d, const float * Y,
 }
 
 int main(int argc, const char ** argv) {
+	const int d = 3; // 3-dimmensional data set
+	const int n = 6; // with 6 elements.
+
+	const float Y[] = {0, 0, 0};
+	const float X[] = {
+		2, 3, 0,	// 1
+		2, 0, 1,	// 2
+		0, 1, 3,	// 3
+		0, 1, 2,	// 4
+		-1, 0, 1,	// 5
+		1, -1, 1	// 6
+	};
+	const int L[] = {
+		RED,		// 1
+		RED,		// 2
+		RED,		// 3
+		GREEN,		// 4
+		GREEN,		// 5
+		RED			// 6
+	};
+
 	knn(n, d, Y, X, L, 2, LABELS, 1);
 	knn(n, d, Y, X, L, 2, LABELS, 3);
 }
