@@ -22,11 +22,15 @@ DATA = [
 	53500, 	NO
 ]
 
+% Decision boundary given by x = BOUNDARY.
+BOUNDARY = 42433.333
+
 OWNERS = DATA( find(DATA(:,2)),1 );
 NONOWNERS = setdiff(DATA(:,1), OWNERS);
 
 hold on;
 plot(NONOWNERS, NO, 'xr', 'LineWidth', 3);
 plot(OWNERS, YES, 'og', 'LineWidth', 3);
+line([BOUNDARY BOUNDARY], get(gca, 'YLim'), 'LineWidth', 3)
 
 end
