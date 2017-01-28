@@ -8,8 +8,8 @@
 #define GREEN	1
 
 const char * LABELS[] = {
-	"RED\0",
-	"GREEN\0"
+	"Red",
+	"Green"
 };
 
 /**
