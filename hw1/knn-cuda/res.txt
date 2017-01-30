@@ -1,0 +1,8 @@
+knn: k=1
+class Red:	0/1
+class Green:	1/1
+
+knn: k=3
+class Red:	2/3
+class Green:	1/3
+
