@@ -1,6 +1,6 @@
 function lda
 
-clear;
+clear all;
 close all;
 
 % Define some simple comments to make things more readable.
@@ -20,10 +20,11 @@ DATA = [
 	49000, 	YES;
 	53000, 	YES;
 	53500, 	NO
-]
+];
 
 % Decision boundary given by x = BOUNDARY.
-BOUNDARY = 42433.333
+% BOUNDARY = 42433.333
+BOUNDARY = 46685.40075;
 
 OWNERS = DATA( find(DATA(:,2)),1 );
 NONOWNERS = setdiff(DATA(:,1), OWNERS);
