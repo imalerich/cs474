@@ -23,7 +23,6 @@ DATA = [
 ];
 
 % Decision boundary given by x = BOUNDARY.
-% BOUNDARY = 42433.333
 BOUNDARY = 46685.40075;
 
 OWNERS = DATA( find(DATA(:,2)),1 );
