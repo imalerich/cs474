@@ -6,11 +6,19 @@ library(foreach)
 library(doParallel)
 
 data <- read.csv("magic04.data", header=F, sep=",")
+train.size <- 13000 # Given by homework specification
+
+######################
+# Develpoment Sample #
+######################
+data <- data[sample(nrow(data)),] # Randomize the data set
+data <- data[1:1000,]
+train.size <- nrow(data) * 0.65
 
 #######
 # KNN #
 #######
-# 
+ 
 # # Try a bunch of different K-values,
 # err <- foreach (K=1:50, .combine = c) %do% {
 #     cl <- makeCluster(4)
@@ -24,7 +32,6 @@ data <- read.csv("magic04.data", header=F, sep=",")
 # 	library(class)
 # 
 # 	data <- data[sample(nrow(data)),] # Randomize the data set
-# 	train.size <- 13000 # Given by homework specification
 # 
 # 	train <- data[1:train.size, 1:10]
 # 	test <- data[(train.size+1):nrow(data), 1:10]
@@ -46,9 +53,37 @@ data <- read.csv("magic04.data", header=F, sep=",")
 # 
 # # About 80.975%
 # print(paste("KNN - Accuracy: ", acc))
-# 
+ 
 #######
 # LDA #
+#######
+
+cl <- makeCluster(4)
+registerDoParallel(cl)
+
+err <- foreach (i=1:1000, .combine = c) %dopar% {
+    library(MASS)
+
+    data <- data[sample(nrow(data)),] # Randomize the data set
+
+    train <- data[1:train.size, 1:10]
+    test <- data[(train.size+1):nrow(data), 1:10]
+    train.cl <- factor(data[1:train.size, 11])
+    test.cl <- factor(data[(train.size+1):nrow(data), 11]);
+
+    model <- lda(x = train, grouping = train.cl)
+    predict.cl <- predict(model, test)$class
+    sum(test.cl != predict.cl) / nrow(test)
+}
+
+stopCluster(cl)
+acc <- 1.0 - mean(err)
+
+# About 75.383%
+print(paste("LDA - Accuracy: ", acc))
+
+#######
+# QDA #
 #######
 
 cl <- makeCluster(4)
@@ -58,21 +93,22 @@ err <- foreach (i=1:100, .combine = c) %dopar% {
     library(MASS)
 
     data <- data[sample(nrow(data)),] # Randomize the data set
-    train.size <- 13000 # Given by homework specification
 
     train <- data[1:train.size, 1:10]
     test <- data[(train.size+1):nrow(data), 1:10]
     train.cl <- factor(data[1:train.size, 11])
     test.cl <- factor(data[(train.size+1):nrow(data), 11]);
+
+    model <- qda(x = train, grouping = train.cl)
+    predict.cl <- predict(model, test)$class
+    sum(test.cl != predict.cl) / nrow(test)
 }
 
 stopCluster(cl)
-acc <- 1.0 - err
-print(paste("LDA - Accuracy: ", acc))
+acc <- 1.0 - mean(err)
 
-#######
-# QDA #
-#######
+# About 78.08%
+print(paste("QDA - Accuracy: ", acc))
 
 ########################
 # Naive Bayes (Normal) #
