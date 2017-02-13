@@ -11,9 +11,9 @@ train.size <- 13000 # Given by homework specification
 ######################
 # Develpoment Sample #
 ######################
-data <- data[sample(nrow(data)),] # Randomize the data set
-data <- data[1:1000,]
-train.size <- nrow(data) * 0.65
+# data <- data[sample(nrow(data)),] # Randomize the data set
+# data <- data[1:1000,]
+# train.size <- nrow(data) * 0.65
 
 #######
 # KNN #
@@ -58,39 +58,68 @@ train.size <- nrow(data) * 0.65
 # LDA #
 #######
 
-cl <- makeCluster(4)
-registerDoParallel(cl)
-
-err <- foreach (i=1:1000, .combine = c) %dopar% {
-    library(MASS)
-
-    data <- data[sample(nrow(data)),] # Randomize the data set
-
-    train <- data[1:train.size, 1:10]
-    test <- data[(train.size+1):nrow(data), 1:10]
-    train.cl <- factor(data[1:train.size, 11])
-    test.cl <- factor(data[(train.size+1):nrow(data), 11]);
-
-    model <- lda(x = train, grouping = train.cl)
-    predict.cl <- predict(model, test)$class
-    sum(test.cl != predict.cl) / nrow(test)
-}
-
-stopCluster(cl)
-acc <- 1.0 - mean(err)
-
-# About 75.383%
-print(paste("LDA - Accuracy: ", acc))
+# cl <- makeCluster(4)
+# registerDoParallel(cl)
+# 
+# err <- foreach (i=1:100, .combine = c) %dopar% {
+#     library(MASS)
+# 
+#     data <- data[sample(nrow(data)),] # Randomize the data set
+# 
+#     train <- data[1:train.size, 1:10]
+#     test <- data[(train.size+1):nrow(data), 1:10]
+#     train.cl <- factor(data[1:train.size, 11])
+#     test.cl <- factor(data[(train.size+1):nrow(data), 11]);
+# 
+#     model <- lda(x = train, grouping = train.cl)
+#     predict.cl <- predict(model, test)$class
+#     sum(test.cl != predict.cl) / nrow(test)
+# }
+# 
+# stopCluster(cl)
+# acc <- 1.0 - mean(err)
+# 
+# # About 78.429%
+# print(paste("LDA - Accuracy: ", acc))
 
 #######
 # QDA #
 #######
 
+# cl <- makeCluster(4)
+# registerDoParallel(cl)
+# 
+# err <- foreach (i=1:100, .combine = c) %dopar% {
+#     library(MASS)
+# 
+#     data <- data[sample(nrow(data)),] # Randomize the data set
+# 
+#     train <- data[1:train.size, 1:10]
+#     test <- data[(train.size+1):nrow(data), 1:10]
+#     train.cl <- factor(data[1:train.size, 11])
+#     test.cl <- factor(data[(train.size+1):nrow(data), 11]);
+# 
+#     model <- qda(x = train, grouping = train.cl)
+#     predict.cl <- predict(model, test)$class
+#     sum(test.cl != predict.cl) / nrow(test)
+# }
+# 
+# stopCluster(cl)
+# acc <- 1.0 - mean(err)
+# 
+# # About 78.4276%
+# print(paste("QDA - Accuracy: ", acc))
+
+########################
+# Naive Bayes (Normal) #
+########################
+
 cl <- makeCluster(4)
 registerDoParallel(cl)
 
 err <- foreach (i=1:100, .combine = c) %dopar% {
-    library(MASS)
+    library(klaR)
+    library(caret)
 
     data <- data[sample(nrow(data)),] # Randomize the data set
 
@@ -99,20 +128,16 @@ err <- foreach (i=1:100, .combine = c) %dopar% {
     train.cl <- factor(data[1:train.size, 11])
     test.cl <- factor(data[(train.size+1):nrow(data), 11]);
 
-    model <- qda(x = train, grouping = train.cl)
-    predict.cl <- predict(model, test)$class
+    model <- train(train, train.cl, 'nb')
+    predict(model)
+    predict.cl <- predict(model$finalModel, test)$class
     sum(test.cl != predict.cl) / nrow(test)
 }
 
 stopCluster(cl)
 acc <- 1.0 - mean(err)
 
-# About 78.08%
-print(paste("QDA - Accuracy: ", acc))
-
-########################
-# Naive Bayes (Normal) #
-########################
+print(paste("Naive Bayes - Accuracy: ", acc))
 
 ########################
 # Naive Bayes (Kernel) #
