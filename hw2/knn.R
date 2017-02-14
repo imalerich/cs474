@@ -46,5 +46,6 @@ min.err <- min(err)
 acc <- 1.0 - min.err
 
 # About 80.975%
+print(paste("Min K: ", k))
 print(paste("KNN - Accuracy: ", acc))
 print(proc.time() - start.time)

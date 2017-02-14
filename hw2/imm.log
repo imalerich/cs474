@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.2.3)  14 FEB 2017 20:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.2.3)  14 FEB 2017 21:04
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -744,11 +744,11 @@ LaTeX Info: Redefining \nameref on input line 13.
 
 (./_minted-imm/default-pyg-prefix.pygstyle) (./_minted-imm/default.pygstyle)
 runsystem(pygmentize -l R -f latex -P commandprefix=PYG -F tokenmerge -o _minte
-d-imm/81CF1A580AF76F8BC781071D2E0A449581EFC1BC90413B0A1A46089372801DA2.pygtex k
+d-imm/F4CD3E920F7BBDD82977A6F70DD6884281EFC1BC90413B0A1A46089372801DA2.pygtex k
 nn.R)...executed.
 
 
-(./_minted-imm/81CF1A580AF76F8BC781071D2E0A449581EFC1BC90413B0A1A46089372801DA2
+(./_minted-imm/F4CD3E920F7BBDD82977A6F70DD6884281EFC1BC90413B0A1A46089372801DA2
 .pygtex
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 6.
@@ -775,7 +775,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ]
 (./_minted-imm/6A6BAD974A57DC62DC6DEEBD9BF96537F7BDE5830841F8304635EAB252591DBA
 .pygtex [10] [11])
-runsystem(rm _minted-imm/FE3C93DB25366305CC7930150370FE4581EFC1BC90413B0A1A4608
+runsystem(rm _minted-imm/81CF1A580AF76F8BC781071D2E0A449581EFC1BC90413B0A1A4608
 9372801DA2.pygtex)...executed.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 269.
@@ -808,7 +808,7 @@ cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><
 /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/amsfonts/symbols/msam10.pfb>
-Output written on imm.pdf (12 pages, 162194 bytes).
+Output written on imm.pdf (12 pages, 162250 bytes).
 PDF statistics:
  129 PDF objects out of 1000 (max. 8388607)
  100 compressed objects within 1 object stream

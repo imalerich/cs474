@@ -47,6 +47,7 @@ min.err \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{k+kp}{min}\PYG{p}{(}err\PYG{p}{)}
 acc \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{l+m}{1.0} \PYG{o}{\PYGZhy{}} min.err
 
 \PYG{c+c1}{\PYGZsh{} About 80.975\PYGZpc{}}
+\PYG{k+kp}{print}\PYG{p}{(}\PYG{k+kp}{paste}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Min K: \PYGZdq{}}\PYG{p}{,} k\PYG{p}{))}
 \PYG{k+kp}{print}\PYG{p}{(}\PYG{k+kp}{paste}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}KNN \PYGZhy{} Accuracy: \PYGZdq{}}\PYG{p}{,} acc\PYG{p}{))}
 \PYG{k+kp}{print}\PYG{p}{(}\PYG{k+kp}{proc.time}\PYG{p}{()} \PYG{o}{\PYGZhy{}} start.time\PYG{p}{)}
 \end{Verbatim}
