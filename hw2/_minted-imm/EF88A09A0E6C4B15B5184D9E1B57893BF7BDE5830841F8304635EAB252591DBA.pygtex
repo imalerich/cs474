@@ -38,7 +38,7 @@ predict \PYG{o}{\PYGZlt{}\PYGZhy{}} predict\PYG{p}{(}model\PYG{p}{,} test\PYG{p}
 \PYG{c+c1}{\PYGZsh{} Naive Bayes \PYGZsh{}}
 \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
 
-model \PYG{o}{\PYGZlt{}\PYGZhy{}} NaiveBayes\PYG{p}{(}x \PYG{o}{=} train\PYG{p}{,} grouping \PYG{o}{=} train.cl\PYG{p}{,} usekernel\PYG{o}{=}\PYG{k+kc}{FALSE}\PYG{p}{)}
+model \PYG{o}{\PYGZlt{}\PYGZhy{}} NaiveBayes\PYG{p}{(}x\PYG{o}{=}train\PYG{p}{,} grouping\PYG{o}{=}train.cl\PYG{p}{,} usekernel\PYG{o}{=}\PYG{k+kc}{FALSE}\PYG{p}{,} fL\PYG{o}{=}\PYG{l+m}{0}\PYG{p}{)}
 predict \PYG{o}{\PYGZlt{}\PYGZhy{}} predict\PYG{p}{(}model\PYG{p}{,} test\PYG{p}{)}
 \PYG{k+kp}{print}\PYG{p}{(}predict\PYG{p}{)} 
 \PYG{k+kp}{print}\PYG{p}{(}\PYG{k+kp}{paste}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Naive Bayes: \PYGZdq{}}\PYG{p}{,} predict\PYG{o}{\PYGZdl{}}\PYG{k+kp}{class}\PYG{p}{))}

@@ -9,6 +9,15 @@
 data \PYG{o}{\PYGZlt{}\PYGZhy{}} read.csv\PYG{p}{(}\PYG{l+s}{\PYGZdq{}magic04.data\PYGZdq{}}\PYG{p}{,} header\PYG{o}{=}\PYG{n+nb+bp}{F}\PYG{p}{,} sep\PYG{o}{=}\PYG{l+s}{\PYGZdq{},\PYGZdq{}}\PYG{p}{)}
 train.size \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{l+m}{13000} \PYG{c+c1}{\PYGZsh{} Given by homework specification}
 start.time \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{k+kp}{proc.time}\PYG{p}{()}
+
+\PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{} Test for Normality \PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+
+data \PYG{o}{\PYGZlt{}\PYGZhy{}} data\PYG{p}{[}\PYG{k+kp}{sample}\PYG{p}{(}\PYG{k+kp}{nrow}\PYG{p}{(}data\PYG{p}{)),]} \PYG{c+c1}{\PYGZsh{} Randomize the data set}
+hz \PYG{o}{=} hzTest\PYG{p}{(}data\PYG{p}{[}\PYG{l+m}{1}\PYG{o}{:}\PYG{l+m}{15000}\PYG{p}{,}\PYG{l+m}{1}\PYG{o}{:}\PYG{l+m}{10}\PYG{p}{],} cov\PYG{o}{=}\PYG{k+kc}{TRUE}\PYG{p}{,} qqplot\PYG{o}{=}\PYG{k+kc}{FALSE}\PYG{p}{)}
+\PYG{k+kp}{print}\PYG{p}{(}hz\PYG{p}{)}
+uniPlot\PYG{p}{(}data\PYG{p}{,} type\PYG{o}{=}\PYG{l+s}{\PYGZdq{}histogram\PYGZdq{}}\PYG{p}{)}
  
 \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
 \PYG{c+c1}{\PYGZsh{} LDA \PYGZsh{}}

@@ -8,6 +8,15 @@ library(doParallel)
 data <- read.csv("magic04.data", header=F, sep=",")
 train.size <- 13000 # Given by homework specification
 start.time <- proc.time()
+
+######################
+# Test for Normality #
+######################
+
+data <- data[sample(nrow(data)),] # Randomize the data set
+hz = hzTest(data[1:15000,1:10], cov=TRUE, qqplot=FALSE)
+print(hz)
+uniPlot(data, type="histogram")
  
 #######
 # LDA #

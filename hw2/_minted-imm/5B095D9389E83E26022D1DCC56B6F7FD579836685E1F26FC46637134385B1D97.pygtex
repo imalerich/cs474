@@ -5,6 +5,7 @@
 
 \PYG{k+kn}{library}\PYG{p}{(}foreach\PYG{p}{)}
 \PYG{k+kn}{library}\PYG{p}{(}doParallel\PYG{p}{)}
+\PYG{k+kn}{library}\PYG{p}{(}MVN\PYG{p}{)}
 
 data \PYG{o}{\PYGZlt{}\PYGZhy{}} read.csv\PYG{p}{(}\PYG{l+s}{\PYGZdq{}magic04.data\PYGZdq{}}\PYG{p}{,} header\PYG{o}{=}\PYG{n+nb+bp}{F}\PYG{p}{,} sep\PYG{o}{=}\PYG{l+s}{\PYGZdq{},\PYGZdq{}}\PYG{p}{)}
 train.size \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{l+m}{13000} \PYG{c+c1}{\PYGZsh{} Given by homework specification}

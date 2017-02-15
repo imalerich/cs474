@@ -1,0 +1,10 @@
+  Henze-Zirkler's Multivariate Normality Test 
+--------------------------------------------- 
+  data : data[1:15000, 1:10] 
+
+  HZ      : 39.14529 
+  p-value : 0 
+
+  Result  : Data are not multivariate normal. 
+--------------------------------------------- 
+

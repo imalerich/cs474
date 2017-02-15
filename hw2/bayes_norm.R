@@ -4,6 +4,7 @@
 
 library(foreach)
 library(doParallel)
+library(MVN)
 
 data <- read.csv("magic04.data", header=F, sep=",")
 train.size <- 13000 # Given by homework specification

@@ -15,16 +15,18 @@ start.time \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{k+kp}{proc.time}\PYG{p}{()}
 \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
  
 \PYG{c+c1}{\PYGZsh{} Try a bunch of different K\PYGZhy{}values,}
-err \PYG{o}{\PYGZlt{}\PYGZhy{}} foreach \PYG{p}{(}K\PYG{o}{=}\PYG{l+m}{1}\PYG{o}{:}\PYG{l+m}{50}\PYG{p}{,} \PYG{l+m}{.}combine \PYG{o}{=} \PYG{k+kt}{c}\PYG{p}{)} \PYG{o}{\PYGZpc{}do\PYGZpc{}} \PYG{p}{\PYGZob{}}
-    cl \PYG{o}{\PYGZlt{}\PYGZhy{}} makeCluster\PYG{p}{(}\PYG{l+m}{8}\PYG{p}{)}
-    registerDoParallel\PYG{p}{(}cl\PYG{p}{)}
+cl \PYG{o}{\PYGZlt{}\PYGZhy{}} makeCluster\PYG{p}{(}\PYG{l+m}{8}\PYG{p}{)}
+registerDoParallel\PYG{p}{(}cl\PYG{p}{)}
+
+err \PYG{o}{\PYGZlt{}\PYGZhy{}} foreach \PYG{p}{(}K\PYG{o}{=}\PYG{l+m}{1}\PYG{o}{:}\PYG{l+m}{1000}\PYG{p}{,} \PYG{l+m}{.}combine \PYG{o}{=} \PYG{k+kt}{c}\PYG{p}{)} \PYG{o}{\PYGZpc{}dopar\PYGZpc{}} \PYG{p}{\PYGZob{}}
+
+    \PYG{c+c1}{\PYGZsh{} Need to load the library for knn on each thread.}
+    \PYG{k+kn}{library}\PYG{p}{(}\PYG{k+kp}{class}\PYG{p}{)}
 
     \PYG{c+c1}{\PYGZsh{} Run KNN 100 times for each K value.}
     \PYG{c+c1}{\PYGZsh{} Each run is independent, so we can speed things up a little}
     \PYG{c+c1}{\PYGZsh{} bit by running it in parallel.}
-    k.err \PYG{o}{\PYGZlt{}\PYGZhy{}} foreach \PYG{p}{(}i\PYG{o}{=}\PYG{l+m}{1}\PYG{o}{:}\PYG{l+m}{100}\PYG{p}{,} \PYG{l+m}{.}combine \PYG{o}{=} \PYG{k+kt}{c}\PYG{p}{)} \PYG{o}{\PYGZpc{}dopar\PYGZpc{}} \PYG{p}{\PYGZob{}}
-	\PYG{c+c1}{\PYGZsh{} Need to load the library for knn on each thread.}
-	\PYG{k+kn}{library}\PYG{p}{(}\PYG{k+kp}{class}\PYG{p}{)}
+    k.err \PYG{o}{\PYGZlt{}\PYGZhy{}} foreach \PYG{p}{(}i\PYG{o}{=}\PYG{l+m}{1}\PYG{o}{:}\PYG{l+m}{1}\PYG{p}{,} \PYG{l+m}{.}combine \PYG{o}{=} \PYG{k+kt}{c}\PYG{p}{)} \PYG{o}{\PYGZpc{}do\PYGZpc{}} \PYG{p}{\PYGZob{}}
 
 	data \PYG{o}{\PYGZlt{}\PYGZhy{}} data\PYG{p}{[}\PYG{k+kp}{sample}\PYG{p}{(}\PYG{k+kp}{nrow}\PYG{p}{(}data\PYG{p}{)),]} \PYG{c+c1}{\PYGZsh{} Randomize the data set}
 
@@ -37,9 +39,12 @@ err \PYG{o}{\PYGZlt{}\PYGZhy{}} foreach \PYG{p}{(}K\PYG{o}{=}\PYG{l+m}{1}\PYG{o}
 	\PYG{k+kp}{sum}\PYG{p}{(}test.cl \PYG{o}{!=} predict.cl\PYG{p}{)} \PYG{o}{/} \PYG{k+kp}{nrow}\PYG{p}{(}test\PYG{p}{)}
     \PYG{p}{\PYGZcb{}}
 
-    stopCluster\PYG{p}{(}cl\PYG{p}{)}
     \PYG{k+kp}{mean}\PYG{p}{(}k.err\PYG{p}{)}
 \PYG{p}{\PYGZcb{}}
+
+stopCluster\PYG{p}{(}cl\PYG{p}{)}
+
+plot\PYG{p}{(}\PYG{l+m}{1}\PYG{o}{:}\PYG{l+m}{1000}\PYG{p}{,} err\PYG{p}{)}
 
 \PYG{c+c1}{\PYGZsh{} This was our best performing k value.}
 k \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{k+kp}{which.min}\PYG{p}{(}err\PYG{p}{)}

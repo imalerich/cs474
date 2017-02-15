@@ -23,19 +23,53 @@
 
 \solution
 
-    \textbf{KNN} \\
+    Comments are provided in all sample R code near print statements detailing
+    the results of runs of the script. \\
+
+    \subsection*{KNN}
+    K-Nearest Neighbors was my best performing method, performing just shy of 81\%,
+    due to the magnitude of the data set, finding the best k value time consuming,
+    even with some parallel processing included to speed up the process.
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{knn.R}
+
+    \subsection*{LDA}
+    I had issues running hzTest on the entire data set with size of 19200, but I was 
+    able to run it on a random subset of size 15000.
+    So instead I resorted to running it on a random subset of the data. \\
+    Both the hzTest and uniPlot indicated that the data was not multi-variate norm.
+    From the plot we can see that some features look almost normal, but overall the data
+    does not follow a normal distribution. Because of this, we can expect LDA and QDA to
+    not perform particularly well. \\
+    Running these methods anyway produced the expected results both performed at about 
+    78\% accuracy on test, which is less than I was able to achieve with KNN. \\
     \bigbreak
-    \textbf{LDA} \\
+    \inputminted[frame=lines,framesep=2mm]{text}{norm.txt}
+    \bigbreak
+    \begin{center}
+	\includegraphics[scale=0.5]{hist}
+    \end{center}
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{lda.R}
-    \bigbreak
-    \textbf{QDA} \\
+
+    \subsection*{QDA}
+    Due to the poor performance of LDA, and the non-linear nature of the input data set,
+    we do not expect QDA to perform any better.
+    It may have one assumption less than LDA, the assumption it keeps still fails.
+    Running the algorithm produces a mean accuracy roughly equivalent to that 
+    produced by LDA. \\
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{qda.R}
-    \bigbreak
-    \textbf{Naive Bayes (Normal)} \\
+
+    \subsection*{Naive Bayes (Normal)}
+    Naive Bayes was less interesting, again, as was the case with LDA, the normal 
+    assumption of the data set failed, but I went ahead and ran it anyway.
+    The results were unexciting, serving as the worst performing classifier
+    over 100 random test cases. \\
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{bayes_norm.R}
-    \bigbreak
-    \textbf{Naive Bayes (Kernel)} \\
+
+    \subsection*{Naive Bayes (Kernel)}
+    Removing the normal assumption of the input data set increased the processing time
+    required to train a model using Naive Bayes with a Kernel density estimation. But
+    this resulted in an improvement in accuracy over Naive Bayes with a Normal assumption.
+    Despite this it still performed worse than LDA and QDA, much less KNN. \\
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{bayes_kern.R}
 
 \problem{}
@@ -196,8 +230,8 @@
     Now we can compute $f_i((0,1)|Y=0)$ for use in our classifier.
 
     \begin{align*}
-	f((0,1)|Y=0) &= \frac{1}{\sqrt{2\Hat{\sigma}_0^2\pi}}
-	    e^{-\frac{((0,1)-\Hat{\mu}_0)^2}{2\Hat{\sigma}_0^2}} &\\
+	f((0,1)|Y=0) &= \frac{1}{\sqrt{2\pi\Hat{\sigma}_0^2}}
+	    e^{-\frac{(<0,1>-\Hat{\mu}_0)^2}{2\Hat{\sigma}_0^2}} &\\
 	&= \frac{1}{(5.2431, 4.9909)} (0.99976, 0.59794) &\\
 	&= (0.19068, 0.11981)
     \end{align*}
@@ -228,8 +262,8 @@
     Now we can compute $f_i((0,1)|Y=1)$ for use in our classifier.
 
     \begin{align*}
-	f((0,1)|Y=1) &= \frac{1}{\sqrt{2\Hat{\sigma}_1^2\pi}}
-	    e^{-\frac{((0,1)-\Hat{\mu}_1)^2}{2\Hat{\sigma}_1^2}} &\\
+	f((0,1)|Y=1) &= \frac{1}{\sqrt{2\pi\Hat{\sigma}_1^2}}
+	    e^{-\frac{(<0,1>-\Hat{\mu}_1)^2}{2\Hat{\sigma}_1^2}} &\\
 	&= \frac{1}{(2.5765, 2.3180)} (0.95490, 0.35664) &\\
 	&= (0.37062, 0.15386)
     \end{align*}

@@ -14,16 +14,18 @@ start.time <- proc.time()
 #######
  
 # Try a bunch of different K-values,
-err <- foreach (K=1:50, .combine = c) %do% {
-    cl <- makeCluster(8)
-    registerDoParallel(cl)
+cl <- makeCluster(8)
+registerDoParallel(cl)
+
+err <- foreach (K=1:1000, .combine = c) %dopar% {
+
+    # Need to load the library for knn on each thread.
+    library(class)
 
     # Run KNN 100 times for each K value.
     # Each run is independent, so we can speed things up a little
     # bit by running it in parallel.
-    k.err <- foreach (i=1:100, .combine = c) %dopar% {
-	# Need to load the library for knn on each thread.
-	library(class)
+    k.err <- foreach (i=1:1, .combine = c) %do% {
 
 	data <- data[sample(nrow(data)),] # Randomize the data set
 
@@ -36,9 +38,12 @@ err <- foreach (K=1:50, .combine = c) %do% {
 	sum(test.cl != predict.cl) / nrow(test)
     }
 
-    stopCluster(cl)
     mean(k.err)
 }
+
+stopCluster(cl)
+
+plot(1:1000, err)
 
 # This was our best performing k value.
 k <- which.min(err)
