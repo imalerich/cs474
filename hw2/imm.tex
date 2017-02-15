@@ -9,6 +9,7 @@
 
 \newcommand{\Hat}[1]{\expandafter\hat#1}
 \DeclareMathOperator*{\argmax}{arg\,max}
+\usemintedstyle{friendly}
 
 \begin{document}
 
@@ -30,6 +31,14 @@
     K-Nearest Neighbors was my best performing method, performing just shy of 81\%,
     due to the magnitude of the data set, finding the best k value time consuming,
     even with some parallel processing included to speed up the process.
+    Minimum k was found by computing the mean error over 100 runs for all k 
+    $\in [0,50]$. I ran some other lighter tests outside of this range with
+    fewer random runs, but the error seemed to increase relatively constantly for 
+    k values greater than 50. As such, I ignored most of these K-values performing
+    more rigorous tests.
+    \begin{center}
+	\includegraphics[scale=0.5]{mink}
+    \end{center}
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{knn.R}
 
     \subsection*{LDA}

@@ -14,10 +14,9 @@ start.time <- proc.time()
 #######
  
 # Try a bunch of different K-values,
-cl <- makeCluster(8)
-registerDoParallel(cl)
+registerDoParallel(cores=4)
 
-err <- foreach (K=1:1000, .combine = c) %dopar% {
+err <- foreach (K=1:50, .combine = c) %dopar% {
 
     # Need to load the library for knn on each thread.
     library(class)
@@ -25,7 +24,7 @@ err <- foreach (K=1:1000, .combine = c) %dopar% {
     # Run KNN 100 times for each K value.
     # Each run is independent, so we can speed things up a little
     # bit by running it in parallel.
-    k.err <- foreach (i=1:1, .combine = c) %do% {
+    k.err <- foreach (i=1:100, .combine = c) %do% {
 
 	data <- data[sample(nrow(data)),] # Randomize the data set
 
@@ -34,16 +33,16 @@ err <- foreach (K=1:1000, .combine = c) %dopar% {
 	train.cl <- factor(data[1:train.size, 11])
 	test.cl <- factor(data[(train.size+1):nrow(data), 11]);
 
-	predict.cl <- knn(train, test, train.cl, k=K)
+	predict.cl <- knn(train, test, train.cl, k=((K*2)+1))
 	sum(test.cl != predict.cl) / nrow(test)
     }
 
     mean(k.err)
 }
 
-stopCluster(cl)
+stopImplicitCluster()
 
-plot(1:1000, err)
+plot(1:50, err)
 
 # This was our best performing k value.
 k <- which.min(err)
@@ -51,6 +50,6 @@ min.err <- min(err)
 acc <- 1.0 - min.err
 
 # About 80.975%
-print(paste("Min K: ", k))
+print(paste("Min K: ", (k*2)+1))
 print(paste("KNN - Accuracy: ", acc))
 print(proc.time() - start.time)

@@ -1,2 +1,9 @@
-*.o
 *.swp
+*.swo
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*_minted-*
+*.synctex.gz
