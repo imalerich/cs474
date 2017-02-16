@@ -2,10 +2,12 @@
 # Setup #
 #########
 
-library(foreach)
-library(doParallel)
+library('foreach')
+library('doParallel')
 
+# Read, scale, & center our data.
 data <- read.csv("magic04.data", header=F, sep=",")
+data[1:nrow(data), 1:10] = scale(data[1:nrow(data), 1:10], center=T, scale=T)
 train.size <- 13000 # Given by homework specification
 start.time <- proc.time()
 
@@ -13,8 +15,7 @@ start.time <- proc.time()
 # QDA #
 #######
 
-cl <- makeCluster(4)
-registerDoParallel(cl)
+registerDoParallel(8)
 
 err <- foreach (i=1:100, .combine = c) %dopar% {
     library(MASS)
@@ -31,7 +32,7 @@ err <- foreach (i=1:100, .combine = c) %dopar% {
     sum(test.cl != predict.cl) / nrow(test)
 }
 
-stopCluster(cl)
+stopImplicitCluster()
 acc <- 1.0 - mean(err)
 
 # About 78.4276%

@@ -2,10 +2,12 @@
 # Setup #
 #########
 
-library(foreach)
-library(doParallel)
+library('foreach')
+library('doParallel')
 
+# Read, scale, & center our data.
 data <- read.csv("magic04.data", header=F, sep=",")
+data[1:nrow(data), 1:10] = scale(data[1:nrow(data), 1:10], center=T, scale=T)
 train.size <- 13000 # Given by homework specification
 start.time <- proc.time()
 
@@ -14,7 +16,7 @@ start.time <- proc.time()
 #######
  
 # Try a bunch of different K-values,
-registerDoParallel(cores=4)
+registerDoParallel(cores=8)
 
 err <- foreach (K=1:50, .combine = c) %dopar% {
 
@@ -36,8 +38,6 @@ err <- foreach (K=1:50, .combine = c) %dopar% {
 	predict.cl <- knn(train, test, train.cl, k=((K*2)+1))
 	sum(test.cl != predict.cl) / nrow(test)
     }
-
-    mean(k.err)
 }
 
 stopImplicitCluster()
@@ -49,7 +49,9 @@ k <- which.min(err)
 min.err <- min(err)
 acc <- 1.0 - min.err
 
-# About 80.975%
+# K = 13
 print(paste("Min K: ", (k*2)+1))
+# About 83.813%
 print(paste("KNN - Accuracy: ", acc))
+# 2243.040s ~ 37m
 print(proc.time() - start.time)
