@@ -37,7 +37,7 @@ print(paste("QDA: ", predict$class))
 # Naive Bayes #
 ###############
 
-model <- NaiveBayes(x=train, grouping=train.cl, usekernel=FALSE, fL=0)
+model <- NaiveBayes(x=train, grouping=train.cl, usekernel=FALSE)
 predict <- predict(model, test)
 print(predict) 
 print(paste("Naive Bayes: ", predict$class))

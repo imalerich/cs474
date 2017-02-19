@@ -27,32 +27,44 @@
     K-Nearest Neighbors was my best performing method, performing just shy of 81\%,
     due to the magnitude of the data set, finding the best k value time consuming,
     even with some parallel processing included to speed up the process.
-    Minimum k was found by computing the mean error over 100 runs for all k 
-    $\in [0,50]$. I ran some other lighter tests outside of this range with
-    fewer random runs, but the error seemed to increase relatively constantly for 
-    k values greater than 50. As such, I ignored most of these K-values performing
+    Minimum k was found by computing the mean error over 100 runs for all odd k 
+    $\in [1,101]$. I ran some other lighter tests outside of this range with
+    fewer random runs, but the error seemed to continue to increase for 
+    lager k values. As such, I ignored these K-values when performing
     more rigorous tests.
+    \bigbreak
+    Initially I achieved an accuracy of about 81\% with KNN, but by normalizing my
+    features I was able to bump that up to near 84\%.
     \begin{center}
-	\includegraphics[scale=0.5]{mink}
+	\includegraphics[scale=0.45]{mink}
     \end{center}
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{knn.R}
 
     \subsection*{LDA}
-    I had issues running hzTest on the entire data set with size of 19200, but I was 
-    able to run it on a random subset of size 15000.
-    So instead I resorted to running it on a random subset of the data. \\
-    Both the hzTest and uniPlot indicated that the data was not multi-variate norm.
+    Both the hzTest and uniPlot indicated that the data was not multi-variate normal.
     From the plot we can see that some features look almost normal, but overall the data
     does not follow a normal distribution. Because of this, we can expect LDA and QDA to
-    not perform particularly well. \\
-    Running these methods anyway produced the expected results both performed at about 
+    not perform well. \\
+    Running these methods anyway produced the expected results, both performed at about 
     78\% accuracy on test, which is less than I was able to achieve with KNN. \\
-    \bigbreak
-    \inputminted[frame=lines,framesep=2mm]{text}{norm.txt}
+    Unlike with KNN, normalizing the data did not seem to affect the performance
+    of the classifier, which is to be expected as they do not rely on distances 
+    as KNN does. \\
+
+    \clearpage
+    \inputminted[frame=lines,framesep=2mm]{text}{h.norm.txt}
     \bigbreak
     \begin{center}
-	\includegraphics[scale=0.5]{hist}
+	\includegraphics[scale=0.5]{hhist}
     \end{center}
+
+    \clearpage
+    \inputminted[frame=lines,framesep=2mm]{text}{g.norm.txt}
+    \begin{center}
+	\includegraphics[scale=0.5]{ghist}
+    \end{center}
+
+    \clearpage
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{lda.R}
 
     \subsection*{QDA}
@@ -300,9 +312,14 @@
 
     I have included the results of the R script that follows as comments directly
     below the corresponding print statements. The result of qda(\ldots) in R
-    produces the exact same posterior class probability as I have computed above.
-    Currently my results for NaiveBayes(\ldots) are off by about 4\%, so I must
-    have an error in my work somewhere.
+    produces the exact same posterior class probability as I have computed above. \\
+    \bigbreak
+    Currently my results for NaiveBayes (assuming normal) are off by about 4\%, so I must
+    have an error in my work somewhere. I spent a couple of hours checking my
+    work and couldn't find any issues, checked against Matlab, which agreed with R.
+    Apparently my friends Python code agrees with my work, so I'm just gonna give up and
+    leave it as is.
     \inputminted[linenos,frame=lines,framesep=2mm]{R}{p2.R}
+    \inputminted[linenos,frame=lines,framesep=2mm]{Matlab}{p2.m}
 
 \end{document}

@@ -16,10 +16,12 @@ start.time <- proc.time()
 # Test for Normality #
 ######################
 
+sink("g.norm.txt", append=F, split=F)
 data <- data[sample(nrow(data)),] # Randomize the data set
-hz = hzTest(data[1:15000,1:10], cov=TRUE, qqplot=FALSE)
+hz = hzTest(data[data[,11]=='g',1:10], cov=TRUE, qqplot=FALSE)
 print(hz)
-uniPlot(data, type="histogram")
+# uniPlot(data, type="histogram")
+sink()
  
 #######
 # LDA #
