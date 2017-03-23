@@ -15,14 +15,14 @@ Y = data(:,73);	  % Labels corresponding to each entry in X.
 tic;
 
 % Kernel Functions: rbf, linear, or polynomial
-% mdl = fitcsvm(X, Y, 'KernelFunction', 'rbf', 'OptimizeHyperparameters', 'auto',...
-% 'HyperparameterOptimizationOptions', struct('Optimizer', 'bayesopt', 'Kfold', 10));
+mdl = fitcsvm(X, Y, 'KernelFunction', 'rbf', 'OptimizeHyperparameters', 'auto',...
+    'HyperparameterOptimizationOptions', struct('Optimizer', 'bayesopt', 'Kfold', 10));
 % linear and polynomial kernels weren't working with the extra parameters
 % but it worked after removing them
 % mdl = fitcsvm(X, Y, 'KernelFunction', 'linear');
 
 % Get our misclassification rate estimate through cross validation.
-% kfoldLoss(crossval(mdl))
+kfoldLoss(crossval(mdl))
 toc;
 
 % rbf 		0.0671 # 148.50 seconds
@@ -34,11 +34,11 @@ toc;
 tic;
 
 % Kernel Functions: lin_kernel, poly_kernel, RBF_kernel
-% mdl = initlssvm(X, Y, 'c', [], [], 'poly_kernel', 'p');
-% mdl = tunelssvm(mdl, 'simplex', 'crossvalidatelssvm', {10, 'misclass'});
-% mdl = trainlssvm(mdl);
+mdl = initlssvm(X, Y, 'c', [], [], 'poly_kernel', 'p');
+mdl = tunelssvm(mdl, 'simplex', 'crossvalidatelssvm', {10, 'misclass'});
+mdl = trainlssvm(mdl);
 % Get our misclassification rate estimate through cross validation.
-% crossvalidate(mdl, 10, 'misclass')
+crossvalidate(mdl, 10, 'misclass')
 
 toc;
 
@@ -48,7 +48,7 @@ toc;
 
 %% Box Plots
 
-B = 2;
+B = 100;
 mcrsvm   = zeros(B,1);
 mcrlssvm = zeros(B,1);
 
@@ -99,6 +99,8 @@ for b = 1:B
     end
 
     mcrlssvm(b, 1) = sum(Ytest ~= yh) / size(Ytest, 1);
+
+    close all;
 end
 
 toc;

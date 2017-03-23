@@ -2,12 +2,14 @@
 \author{Ian Malerich}
 \title{Com S 474: Homework 3}
 
-\usepackage{amssymb, amsfonts, mathtools, graphicx, breqn, minted}
+\usepackage{amssymb, amsfonts, mathtools, graphicx, breqn, minted, graphicx, subfig, float}
 \usemintedstyle{friendly}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 
 \begin{document}
+
+\raggedright
 
 %% Problem 1
 \problem{}
@@ -23,10 +25,109 @@
 
 \solution
 
-\part TODO
-\part TODO
-\part TODO
-\part TODO
+\part
+    \begin{center}
+	\begin{figure}[H]
+	    \centering
+	    \subfloat[Original Data]{{ \includegraphics[scale=0.45]{data} }}
+	    \subfloat[Transformed Data]{{ \includegraphics[scale=0.45]{transformed} }}
+	\end{figure}
+    \end{center}
+
+    From this transformed data, we can clearly see our two support vectors (one for each class).
+    For the orange class (-1) this is at point [1,1] and for the blue class (+1) this is at point [2,2].
+    SVM requires that all points be on their respective "positive" sides of the hyperplane, thus we can
+    see that this hyperplane must pass between the two support vectors we have chosen.
+    This means, that if we imagine a line segment connecting connecting the points \{[1,1], [2,2]\} our
+    hyperplane MUST intersect that line segment. Further, as these points are support vectors, they must lie
+    at equal distance to the hyperplane, from these observations we conclude that the hyperplane will intersect
+    these two points at their midpoint, this will be the point $\frac{1}{2}[1 + 2, 1 + 2] = [\frac{3}{2}, \frac{3}{2}]$. \\
+
+    As our transformed data exists in two dimensions, our hyperplane will take the form of a line, as we know an
+    intercept of this line, the only thing that remains to be found is the slope of the line, once we have that we can
+    derive an equation for this line in the desired form. \\
+
+    Intuitively we would expect the hyperplane to be perpendicular to our imaginary line segment connecting our
+    two support vectors. To see why this must be the case, simply consider the case where it is not.
+    At one extreme, our hyperplane is in line with both support vectors, producing a margin equal to 0, as we rotate 
+    our line, this margin will increase in size. It will continue to increase in size until it reaches the perpendicular
+    we are considering, if we continue to rotate beyond the perpendicular, each edge will begin to approach
+    the opposite class, thus resulting in a decrease again in our margin. Thus maximum margin is achieved at the 
+    perpendicular. As the line segment through \{[1,1],[2,2]\} has slope 1, this implies our hyperplane has slope -1.
+
+    In standard form this means our line will take the form: \\
+    $$
+	ax + b = -1x + 3
+    $$
+    Some simple algebra will produce the vectorized form: \\
+    \begin{align*}
+	-x + 3 &= y &\\
+	x + y - 3 &= 0&\\
+	[1; 1]^T[x; y] - 3 &= 0 &\\
+    \end{align*}
+    From this we have w = [1, 1] and b = -3. \\
+
+    To check our work we need to consider our class labels (else we would simply multiply both sides by -1),
+    we expect $w'[2;2]+b = 1$ and $w'[1;1]+b = -1$. Plugging these values into matlab produces the expected results
+    so I'll assume I did my work correctly.
+
+    \begin{center}
+	\includegraphics[scale=0.8]{boundary}
+    \end{center}
+
+    \clearpage
+
+\part
+
+    The margin will simply be the distance between my two support vectors.
+
+    \begin{align*}
+	dist([1, 1], [2, 2]) &= sqrt((2 - 1)^2 + (2 - 1)^2) &\\
+	&= sqrt(2(1)^2) &\\
+	&= sqrt(2) &\\
+    \end{align*}
+
+    Thus we find we have a margin of $sqrt(2)$.
+
+\part
+
+    Note that the majority of our points are not support vectors, for all of these points we have that 
+    $\alpha = 0$. Note that our support vectors are observation 1 and 5, thus we still need to find
+    $\alpha_1$ and $\alpha_5$. 
+    From my notes we have that 
+    $ w^\intercal = \Sigma_{i=1}^{m}\alpha_i Y_i x_i^\intercal$, noting that each class only has 
+    one support vector we can simplify this as follows
+    $$
+	w^\intercal = \alpha_1 * [2; 2]^\intercal + -\alpha_5 * [1; 1]^\intercal
+    $$
+    This is a 2x2 linear system, format it as such.
+    $$
+	\begin{bmatrix}
+	    1 \\ 1
+	\end{bmatrix}
+	= 
+	\begin{bmatrix}
+	    2 & -1 \\
+	    2 & -1 \\
+	\end{bmatrix}
+	\begin{bmatrix}
+	    \alpha_1 \\
+	    \alpha_5
+	\end{bmatrix}
+    $$
+    From here it is pretty obvious that $\alpha_5 = \alpha_1$ denote this $\delta$
+    and we have $1 = 2\delta - 1\delta = (2 - 1)\delta = \delta$.
+    Thus $\delta = 1$.
+
+    \begin{align*}
+	\alpha_1 &= 1 &\\
+	\alpha_5 &= 1 &\\
+	\alpha_i &= 0 $ otherwise$ &\\
+    \end{align*}
+
+\part
+
+    \inputminted[frame=lines,framesep=2mm]{matlab}{p1.m}
 
 %% Problem 2
 \problem{}
@@ -35,7 +136,11 @@
 
 \solution
 
-    TODO
+    \begin{center}
+	\includegraphics[scale=0.8]{p2.png}
+    \end{center}
+    \clearpage
+    \inputminted[frame=lines,framesep=2mm]{matlab}{p2.m}
 
 %% Problem 3
 \problem{}
@@ -49,6 +154,10 @@
 
 \solution
 
-    TODO
+    \begin{center}
+	\includegraphics[scale=0.45]{p3_boxplot.png}
+    \end{center}
+
+    \inputminted[frame=lines,framesep=2mm]{matlab}{p3.m}
 
 \end{document}
