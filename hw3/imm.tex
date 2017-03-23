@@ -127,7 +127,26 @@
 
 \part
 
+    \begin{center}
+	\begin{figure}[H]
+	    \centering
+	    \subfloat[By Hand]{{ \includegraphics[scale=0.6]{p1predict} }}
+	    \subfloat[Matlab]{{ \includegraphics[scale=0.6]{predict} }}
+	\end{figure}
+    \end{center}
+
+    As shown in the figure the classifier computed by hand appears to misclassify points in the top right corner,
+    I only had time to to check each classifier within the bounds [-3,3] on each axis, so I don't know if this trend
+    would continue if a larger bound was used. By performing some simple arithmetic (see code below), given a
+    $\deltap$-step of 0.005 over the given bounds, the hand written classifier disagreed with matlabs svm
+    classifier 7.772\% of the time. \\
+
+    Despite this difference, the results performed by hand are very close to the result produced by matlab. \\
+
+    \clearpage
     \inputminted[frame=lines,framesep=2mm]{matlab}{p1.m}
+    \inputminted[frame=lines,framesep=2mm]{matlab}{phi.m}
+    \inputminted[frame=lines,framesep=2mm]{matlab}{p1predict.m}
 
 %% Problem 2
 \problem{}
@@ -139,6 +158,14 @@
     \begin{center}
 	\includegraphics[scale=0.8]{p2.png}
     \end{center}
+
+    The graph mostly speaks for itself, the orange line denotes 1 - 1/e, and the blue denotes each
+    iteration of bootstrapping. As the number of iterations increases, the percentage the bootstrap contains
+    of the original sample approaches the orange line (1 - 1/e). Even at 10000 iterations there appears to be
+    an impact of the random values, I would imagine as we continued to increase the number of iterations
+    this would taper off significantly. \\
+
+    Again, code is provided below. \\
     \clearpage
     \inputminted[frame=lines,framesep=2mm]{matlab}{p2.m}
 
@@ -154,8 +181,24 @@
 
 \solution
 
+    I ran svm and lssvm using the available kernel functions, then for each run usdross validation
+    to estimate the misclassification rate. In general, svm took much longer than lssvm, and I could not
+    get matlab to use the polynomial kernel on the data at all (see comments for full details).
+    The best result produced via svm was via the rbf kernenl, which had a misclassification rate of 6.71\% and took
+    148.5 seconds. In contrast each kernel worked for lssvm and took roughly half as long as their svm counterparts.
+    The linear kernel of lssvm performed worse than any of the the linear and rbf kernels of svm, but the rbf
+    kernel for lssvm performed the best out of all options I tested with a misclassification rate of 5.96\%.
+    In terms of computation time, rbf-lssvm was slower than other lssvm kernels, but still plenty fast compared
+    to the svm kernels (taking 75.9 seconds). \\
+    \bigbreak
+    Seeing as the rbf kernel seemed to be performing best for both, I generated a box plot to get a closer look at their 
+    performance. For sake of computation time, these were found by using a random subset of 500 samples for each
+    of my 100 iterations (0.75/0.25 training/test split, see code for details). With the exception of where
+    they were lucky enough to have roughly 0\% misclassification error, we can clearly see from the box plot that
+    lssvm consistently performs better than the svm classifier.
+
     \begin{center}
-	\includegraphics[scale=0.45]{p3_boxplot.png}
+	\includegraphics[scale=0.4]{p3_boxplot.png}
     \end{center}
 
     \inputminted[frame=lines,framesep=2mm]{matlab}{p3.m}
